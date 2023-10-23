@@ -1,24 +1,35 @@
-import chalk from 'chalk';
-import boxen from 'boxen';
+import inquirer from 'inquirer';
+// import separator from 'inquirer/lib/objects/separator';
+import confirm from '@inquirer/confirm';
 
 function write(text) {
     process.stdout.write(text);
 }
 
-// console.log(chalk.bgBlueBright.magenta('Hello world'));
-// console.log(chalk.underline.magenta('Hello world'));
-// console.log(chalk.italic.magenta('Hello world'));
-// console.log(chalk.bgBlackBright.strikethrough('Hello world'));
-// console.log(chalk.bgWhite.inverse('Hello world'));
-// console.log(boxen('box', {borderStyle: "round"}));
-// console.log(boxen('Hello world', chalk.bgBlueBright.magenta()));
+const answer = await confirm({message: 'Are you ready?' });
 
+inquirer
+  .prompt([
+    {type:'input', name:'name', message:'What is your name?'},
+    {type:'number', name:'age', message:'What is your age?'},
+    {type:'password', name:'password', message:'What is your password?'},
+    {type:'editor', name:'story', message:'Describe your life story.'},
+    {type:'list', name:'screensize', message:'What is your screen resolution?', choices: ['360x800', '1366x768', '1280x720', '1536x864', '1920x1080', '3840x2160']},
+    {type:'list', name:'screensize', message:'What is your screen resolution?', choices: ['360x800', '1366x768', '1280x720', '1536x864', '1920x1080', '3840x2160']},
+    {type:'rawlist', name:'videogame', message:'Your favorite video game.', choices: ['Hollow Knight', 'Doom (1993)', 'The Messenger', "Baldur's Gate 3", 'South-Park The Stick of Truth', 'Super Mario Galaxy']},
+    {type:'expand', name:'platform', message:'Your preferred platform.', choices: [{key:'a', value:"Console",},{key:'b', value:"Mobile",},{key:'c', value:'PC',}]},
+    {type:'checkbox', name:'devices', message:'Devices you own:', choices: ['Phone','Tablet','Wristwatch', 'PC', 'Console', 'Fridge']},
+    /* Pass your questions in here */
+  ])
+  .then((answers) => {
+    console.log(answers);
+    // Use user feedback for... whatever!!
+  })
+  .catch((error) => {
+    if (error.isTtyError) {
+      // Prompt couldn't be rendered in the current environment
+    } else {
+      // Something else went wrong
+    }
+  });
 
-console.log(boxen(chalk.bgWhite.black('I am Me'), {title: 'Me', borderStyle:'double'}));
-console.log(boxen(chalk.bgBlueBright.greenBright('Hello Me'), {padding: 2, margin: 1, borderStyle: 'classic'}));
-console.log(boxen(chalk.italic.blueBright('No, they meant me!'), {padding: 1, margin: 4, borderColor: 'magenta', borderStyle: 'arrow'}));
-console.log(boxen(chalk.bold.strikethrough('Are you sure?'), {padding: 3, margin: 1,  borderStyle: 'none'}));
-console.log(boxen(chalk.italic.blueBright('Definitely! I am me!'), {padding: 1, margin: 4, borderColor: 'magenta', borderStyle: 'arrow'}));
-console.log(boxen(chalk.bgBlueBright.greenBright('Oh, okay! Hello Me & Me!'), {padding: 2, margin: 1, borderStyle: 'classic'}));
-console.log(boxen(chalk.bgWhite.black('You guys are idiots.'), {title: 'Me', borderStyle:'double'}));
-console.log(boxen('Fin', {dimBorder: 0.5, width: 35,height:3}));
